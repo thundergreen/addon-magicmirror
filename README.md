@@ -1,8 +1,14 @@
-# Community Hass.io Add-ons: MagicMirror²
+# Home Assistant Community Add-on: MagicMirror²
 
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
+
+![Supports armhf Architecture][armhf-shield]
+![Supports armv7 Architecture][armv7-shield]
+![Supports aarch64 Architecture][aarch64-shield]
+![Supports amd64 Architecture][amd64-shield]
+![Supports i386 Architecture][i386-shield]
 
 [![GitLab CI][gitlabci-shield]][gitlabci]
 ![Project Maintenance][maintenance-shield]
@@ -28,7 +34,7 @@ bathroom mirror into your personal assistant.
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
+comparison to installing any other Home Assistant add-on.
 
 1. [Add our Hass.io add-ons repository][repository] to your Hass.io instance.
 1. Install the "MagicMirror²" add-on.
@@ -43,30 +49,20 @@ first time starting the add-on).
 **NOTE**: Do not add this repository to Hass.io, please use:
 `https://github.com/hassio-addons/repository`.
 
-## Docker status
-
-![Supports armhf Architecture][armhf-shield]
-![Supports aarch64 Architecture][aarch64-shield]
-![Supports amd64 Architecture][amd64-shield]
-![Supports i386 Architecture][i386-shield]
-
-[![Docker Layers][layers-shield]][microbadger]
-[![Docker Pulls][pulls-shield]][dockerhub]
-
 ## Configuration
 
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
 Example add-on configuration:
 
-```json
-{
-  "log_level": "info",
-  "ssl": true,
-  "certfile": "fullchain.pem",
-  "keyfile": "privkey.pem",
-  "ipv6": false
-}
+```yaml
+log_level: info
+ssl: true
+certfile: fullchain.pem
+keyfile: privkey.pem
+ipv6: false
+modules:
+  - mihairinzis/MMM-wiki
 ```
 
 **Note**: _This is just an example, don't copy and paste it! Create your own!_
@@ -98,17 +94,25 @@ to enable it, `false` otherwise.
 
 The certificate file to use for SSL.
 
-**Note**: _The file MUST be stored in `/ssl/`, which is the default for Hass.io_
+**Note**: _The file MUST be stored in `/ssl/`, which is the default_
 
 ### Option: `keyfile`
 
 The private key file to use for SSL.
 
-**Note**: _The file MUST be stored in `/ssl/`, which is the default for Hass.io_
+**Note**: _The file MUST be stored in `/ssl/`, which is the default_
 
-### Option: `ipv6`
+### Option: `modules`
 
-Set this option too `false` to disable IPv6 support.
+A list of modules you would like to use.
+The modules needs to be hosted in a github repo.
+
+For `https://github.com/mihairinzis/MMM-wiki` you use:
+
+```yaml
+modules:
+  - "mihairinzis/MMM-wiki"
+```
 
 ### Option: `i_like_to_be_pwned`
 
@@ -132,7 +136,7 @@ only exposed to your internal network. USE AT YOUR OWN RISK!_
 It is possible to embed MagicMirror² directly into Home Assistant, allowing you to
 access your MagicMirror² through the Home Assistant frontend.
 
-Home Assistant provides the `panel_iframe` component, for these purposes.
+Home Assistant provides the `panel_iframe` integration, for these purposes.
 
 Example configuration:
 
@@ -141,7 +145,7 @@ panel_iframe:
   magicmirror:
     title: MagicMirror²
     icon: mdi:code-brackets
-    url: http://addres.to.your.hass.io:1337
+    url: http://addres.to.your.hass.io:6556
 ```
 
 ## Changelog & Releases
@@ -164,7 +168,7 @@ Got questions?
 
 You have several options to get them answered:
 
-- The [Community Hass.io Add-ons Discord chat server][discord] for add-on
+- The [Home Assistant Community Add-ons Discord chat server][discord] for add-on
   support and feature requests.
 - The [Home Assistant Discord chat server][discord-ha] for general Home
   Assistant discussions and questions.
@@ -190,18 +194,18 @@ The original setup of this repository is by [Joakim Sørensen][ludeeus].
 For a full list of all authors and contributors,
 check [the contributor's page][contributors].
 
-## We have got some Hass.io add-ons for you
+## We have got some Home Assistant add-ons for you
 
-Want some more functionality to your Hass.io Home Assistant instance?
+Want some more functionality to your Home Assistant instance?
 
-We have created multiple add-ons for Hass.io. For a full list, check out
+We have created multiple add-ons for Home Assistant. For a full list, check out
 our [GitHub Repository][repository].
 
 ## License
 
 MIT License
 
-Copyright (c) 2018 Joakim Sørensen
+Copyright (c) 2018-2020 Joakim Sørensen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -226,6 +230,7 @@ SOFTWARE.
 [anchore-shield]: https://anchore.io/service/badges/image/67d1185473090e99d5ac5e1bb4d1aa2295117a9bd3d7abbf8cd8a71e331c8388
 [anchore]: https://anchore.io/image/dockerhub/hassioaddons%2Funifi%3Alatest
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [bountysource-shield]: https://img.shields.io/bountysource/team/hassio-addons/activity.svg
 [bountysource]: https://www.bountysource.com/teams/hassio-addons/issues
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
@@ -239,19 +244,16 @@ SOFTWARE.
 [dockerhub]: https://hub.docker.com/r/hassioaddons/magicmirror
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/
-[ludeeus]: https://github.com/ludeeus
 [gitlabci-shield]: https://gitlab.com/hassio-addons/addon-magicmirror/badges/master/pipeline.svg
 [gitlabci]: https://gitlab.com/hassio-addons/addon-magicmirror/pipelines
 [home-assistant]: https://home-assistant.io
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [issue]: https://github.com/hassio-addons/addon-magicmirror/issues
 [keepchangelog]: http://keepachangelog.com/en/1.0.0/
-[layers-shield]: https://images.microbadger.com/badges/image/hassioaddons/magicmirror.svg
 [license-shield]: https://img.shields.io/github/license/hassio-addons/addon-magicmirror.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2018.svg
-[microbadger]: https://microbadger.com/images/hassioaddons/magicmirror
+[ludeeus]: https://github.com/ludeeus
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-experimental-yellow.svg
-[pulls-shield]: https://img.shields.io/docker/pulls/hassioaddons/magicmirror.svg
 [reddit]: https://reddit.com/r/homeassistant
 [releases-shield]: https://img.shields.io/github/release/hassio-addons/addon-magicmirror.svg
 [releases]: https://github.com/hassio-addons/addon-magicmirror/releases

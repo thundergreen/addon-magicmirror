@@ -34,14 +34,14 @@ function authenticate()
         return true
     end
 
-    --- HTTP request against Hassio API in LUA
+    --- HTTP request against the Supervisor API in LUA
     local httpc = http.new()
     local res, err = httpc:request_uri("http://hassio/auth", {
         method = "POST",
         body = ngx.encode_args({["username"]=username, ["password"]=password}),
         headers = {
             ["Content-Type"] = "application/x-www-form-urlencoded",
-            ["X-HASSIO-KEY"] = os.getenv("HASSIO_TOKEN"),
+            ["X-Supervisor-Token"] = os.getenv("SUPERVISOR_TOKEN"),
         },
         keepalive_timeout = 60,
         keepalive_pool = 10
@@ -49,13 +49,13 @@ function authenticate()
 
     --- Error during API request
     if err then
-        ngx.log(ngx.WARN, "Error during Hassio user authentication.", err)
+        ngx.log(ngx.WARN, "Error during Home Assistant user authentication.", err)
         return false
     end
 
     --- No result? Something went wrong...
     if not res then
-        ngx.log(ngx.WARN, "Error during Hassio user authentication.")
+        ngx.log(ngx.WARN, "Error during Home Assistant user authentication.")
         return false
     end
 
