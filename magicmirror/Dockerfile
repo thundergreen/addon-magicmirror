@@ -16,6 +16,20 @@ WORKDIR /opt
 # hadolint ignore=DL3003
 RUN \
   apk add --no-cache \
+
+    nodejs=10.14.2-r0 \
+    npm=8.14.0-r0 \
+    apache2-utils=2.4.38-r3 \
+    nginx=1.14.2-r0 \
+    lua-resty-http=0.12-r1 \
+    nginx-mod-http-lua=1.14.2-r0 \
+  && apk add --no-cache --virtual .build-dependencies \
+    git=2.18.1-r0 \
+  && cd /opt \
+  && git clone https://github.com/MichMich/MagicMirror.git /opt \
+  && npm install --unsafe-perm \
+  && apk del --purge .build-dependencies
+=======
       git=2.24.1-r0 \
       lua-resty-http=0.15-r0 \
       nginx-mod-http-lua=1.16.1-r6 \
@@ -58,6 +72,7 @@ RUN \
     /opt/.git \
     /opt/modules/MMM-HASS/.git \
     /root/.electron
+
 
 # Copy root filesystem
 COPY rootfs /
