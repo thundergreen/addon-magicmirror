@@ -1,24 +1,22 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Community Hass.io Add-ons: MagicMirror²
+# Home Assistant Community Add-on: MagicMirror²
 # Runs the NGINX daemon
 # ==============================================================================
-# shellcheck disable=SC1091
-source /usr/lib/hassio-addons/base.sh
 
 # Wait for MagicMirror² to become available
-s6-svwait -u -t 5000 /var/run/s6/services/magicmirror
+bashio::net.wait_for 8080
 
 # Disable HA Authentication if front door is open
-if hass.config.true 'leave_front_door_open'; then
+if bashio::config.true 'leave_front_door_open'; then
     export DISABLE_HA_AUTHENTICATION=true
 fi
 
-hass.log.info "Starting NGINX..."
-if hass.config.true 'ssl'; then
+bashio::log.info "Starting NGINX..."
+if bashio::config.true 'ssl'; then
     options='/etc/nginx/nginx-ssl.conf'
 else
     options='/etc/nginx/nginx.conf'
  fi
 
- exec nginx -c "$options"
+exec nginx -c "$options"

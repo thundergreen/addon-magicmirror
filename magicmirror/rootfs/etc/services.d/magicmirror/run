@@ -1,11 +1,8 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Community Hass.io Add-ons: MagicMirror²
+# Home Assistant Community Add-on: MagicMirror²
 # Runs MagicMirror²
 # ==============================================================================
-# shellcheck disable=SC1091
-source /usr/lib/hassio-addons/base.sh
-
-hass.log.info "Starting MagicMirror² server..."
-cd /opt || hass.die "Could not change dir."
+bashio::log.info "Starting MagicMirror² server..."
+cd /opt || bashio::exit "Could not change dir."
 exec node serveronly
